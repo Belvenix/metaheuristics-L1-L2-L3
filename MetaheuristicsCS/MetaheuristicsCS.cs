@@ -191,6 +191,11 @@ namespace MetaheuristicsCS
                 -359627, -36357,  691113,  -857379, 573398,
                 -139481, -604859, 669982,  -187522, 632728
             };
+
+            //int[] seeds =
+            //{
+            //    1
+            //};
             var sol1 = new Lab1();
             var sol2 = new Lab2();
             var sol3 = new Lab3();

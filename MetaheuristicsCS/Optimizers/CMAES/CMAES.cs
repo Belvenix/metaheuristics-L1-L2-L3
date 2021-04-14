@@ -8,6 +8,7 @@ using Generators;
 using Optimizers.CMAESImpl;
 using StopConditions;
 using Utility;
+using MathNet.Numerics;
 
 namespace Optimizers
 {
@@ -27,6 +28,25 @@ namespace Optimizers
         private readonly StepSizeParameters stepSizeParameters;
 
         private readonly List<Individual> sampledPopulation;
+
+        //Zmiana metody aby moc isc dalej pomimo problemu ze zbieznoscia
+        public override void Run()
+        {
+            Initialize();
+
+            while (!ShouldStop())
+            {
+                try
+                {
+                    RunIteration();
+                }
+                catch (NonConvergenceException exception)
+                {
+                    Console.WriteLine(exception.GetType());
+                    break;
+                }
+            }
+        }
 
         public CMAES(IEvaluation<double> evaluation, AStopCondition stopCondition, double initSigma, int? seed=null)
             : base(evaluation, stopCondition)

@@ -7,12 +7,17 @@ namespace Mutations
     {
         private const double OneFifth = 0.2;
 
-        private readonly int archiveSize;
-        private readonly double modifier;
+        public readonly int archiveSize;
+        public readonly double modifier;
 
         private int successCounter;
 
         private readonly Queue<bool> successes;
+
+        public RealOneFifthRuleMutationES11Adaptation(RealGaussianMutation mutation)
+            :this(10, 2, mutation)
+        {
+        }
 
         public RealOneFifthRuleMutationES11Adaptation(int archiveSize, double modifier, RealGaussianMutation mutation)
             : base(mutation)

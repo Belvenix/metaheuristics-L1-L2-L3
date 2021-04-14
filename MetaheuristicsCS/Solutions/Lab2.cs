@@ -11,36 +11,41 @@ namespace MetaheuristicsCS.Solutions
 {
     class Lab2 : ALab<double>
     {
-        private List<String> Lab2CheckContinuousProblems(int? seed, bool debug=true)
+        private void Lab2CheckContinuousProblems(int? seed, bool debug=true)
         {
-            List<String> resultData = new List<String>();
+            List<String> t;
 
             if (debug) Console.WriteLine("Benchmarked problems (No Mutation Adaptation): " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab2CheckAdaptationAgainstContinuousProblems<RealNullRealMutationES11Adaptation>(seed));
+            t = Lab2CheckAdaptationAgainstContinuousProblems<RealNullRealMutationES11Adaptation>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-benchmark.txt", t);
 
             if (debug) Console.WriteLine("Simulated Annealing MA " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab2CheckAdaptationAgainstContinuousProblems<RealSimulatedAnnealingMutationAdaptation>(seed));
+            t = Lab2CheckAdaptationAgainstContinuousProblems<RealSimulatedAnnealingMutationAdaptation>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-sa.txt", t);
 
             if (debug) Console.WriteLine("Igniting Simulated Annealing MA problems: " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab2CheckAdaptationAgainstContinuousProblems<RealIgnitingSimAnnMutationAdaptation>(seed));
+            t = Lab2CheckAdaptationAgainstContinuousProblems<RealIgnitingSimAnnMutationAdaptation>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-isa.txt", t);
 
             if (debug) Console.WriteLine("Simulated Annealing MA with Domain Knowledge: " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeSimAnnAdaptationMutation>(seed));
+            t = Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeSimAnnAdaptationMutation>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-dksa.txt", t);
 
             if (debug) Console.WriteLine("Igniting Simulated Annealing MA with Domain Knowledge: " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeIgnSimAnnMutationAdaptation>(seed));
+            t = Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeIgnSimAnnMutationAdaptation>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-dkisa.txt", t);
 
-            return resultData;
         }
 
-        private List<String> Lab2CheckAdaptationAgainstContinuousProblems<A>(int? seed, int maxIter = 1000) where A : ARealMutationES11Adaptation
+        //Akcesor pozwala na uzycie w lab3
+        protected List<String> Lab2CheckAdaptationAgainstContinuousProblems<A>(int? seed, int maxIter = 1000) where A : ARealMutationES11Adaptation
         {
             List<String> resultData = new List<String>();
 
             IEvaluation<double>[] benchmarkProblems = GenerateProblems();
             foreach (var problem in benchmarkProblems)
             {
-                problem.pcConstraint.tGetLowerBound(0); ;
+                problem.pcConstraint.tGetLowerBound(0);
                 List<double> sigmas = Enumerable.Repeat(0.1, problem.iSize).ToList();
 
                 IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
@@ -88,20 +93,18 @@ namespace MetaheuristicsCS.Solutions
         public override void Run(int[] seeds)
         {
             bool debug = true;
-            List<String> resultData = new List<String>();
             
-            int i = 0;
+            int i = 1;
 
             Console.WriteLine("Start Lab2: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             foreach (int seed in seeds)
             {
-                resultData.AddRange(Lab2CheckContinuousProblems(seed));
-                if (debug) Console.WriteLine("Finished " + (i + 1).ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                Lab2CheckContinuousProblems(seed);
+                if (debug) Console.WriteLine("Finished " + i.ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;
             }
 
-            if (debug) Console.WriteLine("Finished second Lab and saving: " + DateTime.Now);
-            this.SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\lab2.txt", resultData);
+            if (debug) Console.WriteLine("Finished second Lab: " + DateTime.Now);
         }
 
         protected override IEvaluation<double>[] GenerateProblems()

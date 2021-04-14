@@ -49,21 +49,14 @@ namespace Optimizers
             return StopCondition.Stop((Result != null) ? Result.BestValue : double.NegativeInfinity, iterationNumber, Evaluation.iFFE, startTime);
         }
 
-        public void Run()
+        //Zmiana sygnatury aby moc poprawic CMAESa
+        public virtual void Run()
         {
             Initialize();
 
             while (!ShouldStop())
             {
-                try
-                {
-                    RunIteration();
-                }
-                catch (NonConvergenceException exception)
-                {
-                    Console.WriteLine(exception.GetType());
-                    break;
-                }
+                RunIteration();
             }
         }
 

@@ -22,6 +22,7 @@ namespace MetaheuristicsCS.Solutions
             IEvaluation<bool>[] benchmarkProblems = GenerateProblems();
             foreach (var problem in benchmarkProblems)
             {
+                //Console.WriteLine(problem);
                 IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
 
                 var optimizer = (O)Activator.CreateInstance(typeof(O), problem, stopCondition, seed);
@@ -43,6 +44,7 @@ namespace MetaheuristicsCS.Solutions
             IEvaluation<bool>[] benchmarkProblems = GenerateProblems();
             foreach (var problem in benchmarkProblems)
             {
+                //Console.WriteLine(problem);
                 var optimizer = new BinaryGreedyOptimizer(problem, seed);
 
                 optimizer.Run();
@@ -62,19 +64,23 @@ namespace MetaheuristicsCS.Solutions
             IEvaluation<bool>[] benchmarkProblems = GenerateProblems();
             foreach (var problem in benchmarkProblems)
             {
-                IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
+                //Console.WriteLine(problem);
+                IterationsStopCondition stopCondition;
                 AStopCondition greedyStopCondition;
                 switch (conditionType)
                 {
                     case 1:
+                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
                         greedyStopCondition = new IterationsStopCondition(problem.dMaxValue, 1);
                         break;
                     case 2:
+                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter / 4);
                         greedyStopCondition = new IterationsStopCondition(problem.dMaxValue, 4);
                         break;
                     case 3:
                     default:
-                        greedyStopCondition = new SignificantImprovementsStopCondition(problem.dMaxValue, maxIter / 10);
+                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter / 10);
+                        greedyStopCondition = new SignificantImprovementsStopCondition(problem.dMaxValue, maxIter / 100);
                         break;
                 }
 
@@ -154,43 +160,44 @@ namespace MetaheuristicsCS.Solutions
             return problems;
         }
 
-        private List<String> Lab1SeedRun(int? seed, bool debug = true)
-        {
-            List<String> resultData = new List<String>();
-            if (debug) Console.WriteLine("Benchmarked problems: " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab1CheckBinaryProblems(seed));
+        private void Lab1SeedRun(int? seed, bool debug = true)
+        { 
+            List<String> t;
 
-            if (debug) Console.WriteLine("Greedy implementation results with benchmarked problems " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab1CheckGreedyAgainstBinaryProblems(seed));
+            if (debug) Console.WriteLine("Benchmarked problems: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+
+            t = Lab1CheckBinaryProblems(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-benchmark.txt", t);
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=1) " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab1CheckRGSAgainstBinaryProblems(1, seed));
+            t = Lab1CheckRGSAgainstBinaryProblems(1, seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-1.txt", t);
+
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=4) " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab1CheckRGSAgainstBinaryProblems(2, seed));
+            t = Lab1CheckRGSAgainstBinaryProblems(2, seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-4.txt", t);
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=custom) " + DateTime.Now.ToString("HH:mm:ss.fff"));
-            resultData.AddRange(Lab1CheckRGSAgainstBinaryProblems(3, seed));
-            return resultData;
+            t = Lab1CheckRGSAgainstBinaryProblems(3, seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-custom.txt", t);
+
         }
 
         public override void Run(int[] seeds)
         {
-            List<String> resultData = new List<String>();
             bool debug = true;
 
             int i = 1;
             Console.WriteLine("Start Lab1: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             foreach (int seed in seeds)
             {
-                resultData.AddRange(Lab1SeedRun(seed));
+                Lab1SeedRun(seed);
 
-                if (debug) Console.WriteLine("Finished " + (i + 1).ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                if (debug) Console.WriteLine("Finished " + i.ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;
             }
-            Console.WriteLine("Finished first Lab and saving: " + DateTime.Now);
-
-            this.SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\lab1.txt", resultData);
+            Console.WriteLine("Finished first Lab: " + DateTime.Now);
         }
 
         protected override string FormatOptimizerParameters(AOptimizer<bool> optimizer)

@@ -18,11 +18,11 @@ namespace MetaheuristicsCS.Mutations
 
         }
 
-        public RealSimulatedAnnealingMutationAdaptation(RealGaussianMutation mutation, double startingTemperature = 1000, double temperatureDropCoef = .05)
+        public RealSimulatedAnnealingMutationAdaptation(RealGaussianMutation mutation, double startingTemperature = 1000, double temperatureDropCoef = .02)
             : base(mutation)
         {
 
-            this.temperatureDropCoef = temperatureDropCoef > 0 && temperatureDropCoef < 1 ? temperatureDropCoef : .05;
+            this.temperatureDropCoef = temperatureDropCoef > 0 && temperatureDropCoef < 1 ? temperatureDropCoef : .02;
             this.startingTemperature = startingTemperature > 0 ? startingTemperature : 1000;
 
             Mutation.MultiplySigmas(startingTemperature);

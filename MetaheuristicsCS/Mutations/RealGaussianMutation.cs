@@ -44,10 +44,13 @@ namespace Mutations
                 {
                     // Poprawiono kod, ponieważ w poprzednim stanie nie był sprawdzany zakres przez co zdarza sie ze wychodzi poza zakres i nie moze wrocic
                     double tempSolution = 0;
+                    int counter = 0;
                     do
                     {
+                        counter++;
                         tempSolution = solution[i];
                         tempSolution += gaussianRNG.Next(0.0, sigmas[i]);
+                        if (counter > 100) return false;
                     } while (!evaluationProfile.pcConstraint.bIsFeasible(i, tempSolution));
                     solution[i] = tempSolution;
                     //do
@@ -73,6 +76,11 @@ namespace Mutations
         public double Sigmas(int index)
         {
             return sigmas[index];
+        }
+
+        public List<double> Sigmas()
+        {
+            return sigmas;
         }
 
         public void Sigma(int index, double value)

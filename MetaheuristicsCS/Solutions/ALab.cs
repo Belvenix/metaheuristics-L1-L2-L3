@@ -68,13 +68,13 @@ namespace MetaheuristicsCS.Solutions
             }
             else
             {
-                //using (StreamWriter sw = File.AppendText(filepath))
-                //{
-                //    foreach (var line in lines)
-                //    {
-                //        sw.WriteLine(line);
-                //    }
-                //}
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    foreach (var line in lines)
+                    {
+                        sw.WriteLine(line);
+                    }
+                }
             }
         }
 

@@ -1,4 +1,6 @@
 ﻿using EvaluationsCLI;
+using MetaheuristicsCS.Optimizers.Complex;
+using Mutations;
 using Optimizers;
 using StopConditions;
 using System;
@@ -16,23 +18,34 @@ namespace MetaheuristicsCS.Solutions
             bool debug = true;
             List<String> resultData = new List<String>();
 
-            int i = 0;
+            int i = 1;
 
             Console.WriteLine("Start Lab3: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             foreach (int seed in seeds)
             {
-                resultData.AddRange(Lab3CheckCmaes(seed));
-                if (debug) Console.WriteLine("Finished " + (i + 1).ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                Lab3CheckAll(seed);
+                if (debug) Console.WriteLine("Finished " + i.ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;
             }
 
-            if (debug) Console.WriteLine("Finished third Lab and saving: " + DateTime.Now);
-            this.SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\lab3.txt", resultData);
+            if (debug) Console.WriteLine("Finished third Lab: " + DateTime.Now);
+            
         }
 
-        private List<String> Lab3CheckCmaes(int? seed)
+        private void Lab3CheckAll(int? seed, bool debug = true)
         {
-            return Lab3CheckoptimizerAgainstContinuousProblems<CMAES>(seed);
+            List<String> t;
+            if (debug) Console.WriteLine("CMAES: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+            t = Lab3CheckoptimizerAgainstContinuousProblems<CMAES>(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-benchmark.txt", t);
+
+            if (debug) Console.WriteLine("ES(1+1) one-fifth: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+            t = Lab3CheckMineHistory(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-one-fifth.txt", t);
+
+            if (debug) Console.WriteLine("ES(1+1) scouting: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+            t = Lab3CheckSpaceAnalysisAroundSol(seed);
+            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-scouting.txt", t);
         }
 
         private List<String> Lab3CheckoptimizerAgainstContinuousProblems<O>(int? seed, int maxIter = 1000) where O : AOptimizer<double>
@@ -42,6 +55,7 @@ namespace MetaheuristicsCS.Solutions
             IEvaluation<double>[] benchmarkProblems = GenerateProblems();
             foreach (var problem in benchmarkProblems)
             {
+                Console.WriteLine(problem);
                 IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
 
                 var optimizer = (O)Activator.CreateInstance(typeof(O), problem, stopCondition, 1, seed);
@@ -56,18 +70,40 @@ namespace MetaheuristicsCS.Solutions
             return resultData;
         }
 
-        private List<String> Lab3CheckMineHistory(int? seed)
+        private List<String> Lab3CheckoptimizerAgainstContinuousProblems(int? seed, int maxIter = 1000)
         {
             List<String> resultData = new List<String>();
+
+            IEvaluation<double>[] benchmarkProblems = GenerateProblems();
+            foreach (var problem in benchmarkProblems)
+            {
+                problem.pcConstraint.tGetLowerBound(0);
+                List<double> sigmas = Enumerable.Repeat(0.1, problem.iSize).ToList();
+
+                IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
+                RealGaussianMutation mutation = new RealGaussianMutation(sigmas, problem, seed);
+                var mutationAdaptation = new RealNullRealMutationES11Adaptation(mutation);
+
+                RealEvolutionStrategy11 optimizer = new RealES11Scouting(problem, stopCondition, mutationAdaptation, seed);
+
+                optimizer.Run();
+
+                resultData.Add(FormatSave(optimizer));
+
+                ReportOptimizationResult(optimizer.Result);
+            }
 
             return resultData;
         }
 
+        private List<String> Lab3CheckMineHistory(int? seed)
+        {
+            return Lab2CheckAdaptationAgainstContinuousProblems<RealOneFifthRuleMutationES11Adaptation>(seed);
+        }
+
         private List<String> Lab3CheckSpaceAnalysisAroundSol(int? seed)
         {
-            List<String> resultData = new List<String>();
-
-            return resultData;
+            return Lab3CheckoptimizerAgainstContinuousProblems(seed); ;
         }
 
         protected override string FormatOptimizerParameters(AOptimizer<double> optimizer)
@@ -76,6 +112,25 @@ namespace MetaheuristicsCS.Solutions
             if(optimizer.GetType() == typeof(CMAES))
             {
                 parametry += "None";
+            }
+            else if (optimizer.GetType() == typeof(RealES11Scouting))
+            {
+                parametry += "Scouting" + ", " +
+                    ((RealES11Scouting)optimizer).nScouts.ToString() + ", " +
+                    ((RealES11Scouting)optimizer).scoutingMultiplier.ToString();
+            }
+            else if (optimizer.GetType() == typeof(RealEvolutionStrategy11))
+            {
+                if (((RealEvolutionStrategy11)optimizer).mutationAdaptation.GetType() == typeof(RealOneFifthRuleMutationES11Adaptation))
+                {
+                    parametry += "OneFifthRule" + ", " +
+                       ((RealOneFifthRuleMutationES11Adaptation)((RealEvolutionStrategy11)optimizer).mutationAdaptation).archiveSize.ToString() + ", " +
+                       ((RealOneFifthRuleMutationES11Adaptation)((RealEvolutionStrategy11)optimizer).mutationAdaptation).modifier.ToString();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
             }
             else
             {
