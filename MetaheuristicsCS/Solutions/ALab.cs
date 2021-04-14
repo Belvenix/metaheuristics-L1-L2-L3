@@ -29,15 +29,29 @@ namespace MetaheuristicsCS.Solutions
 
         protected String FormatSave(AOptimizer<E> optimizer)
         {
-            String optimizerName = optimizer.GetType().Name;
-            String optimizerParameters = FormatOptimizerParameters(optimizer);
-            String optimizerResult = FormatOptimizationResult(optimizer.Result);
-            String problemParameters = FormatProblemParameters(optimizer.Evaluation);
+            if (!optimizer.divergenceException)
+            {
+                String optimizerName = optimizer.GetType().Name;
+                String optimizerParameters = FormatOptimizerParameters(optimizer);
+                String optimizerResult = FormatOptimizationResult(optimizer.Result);
+                String problemParameters = FormatProblemParameters(optimizer.Evaluation);
 
-            return optimizerName + ", " +
-                optimizerParameters + ", " +
-                problemParameters + ", " +
-                optimizerResult;
+                return optimizerName + ", " +
+                    optimizerParameters + ", " +
+                    problemParameters + ", " +
+                    optimizerResult;
+            }
+            else
+            {
+                String optimizerName = optimizer.GetType().Name;
+                String optimizerParameters = FormatOptimizerParameters(optimizer);
+                String problemParameters = FormatProblemParameters(optimizer.Evaluation);
+
+                return optimizerName + ", " +
+                    optimizerParameters + ", " +
+                    problemParameters + ", " +
+                    "diverged";
+            }
         }
 
         protected void SaveToFile(String filepath, List<String> lines)
@@ -54,17 +68,17 @@ namespace MetaheuristicsCS.Solutions
             }
             else
             {
-                using (StreamWriter sw = File.AppendText(filepath))
-                {
-                    foreach (var line in lines)
-                    {
-                        sw.WriteLine(line);
-                    }
-                }
+                //using (StreamWriter sw = File.AppendText(filepath))
+                //{
+                //    foreach (var line in lines)
+                //    {
+                //        sw.WriteLine(line);
+                //    }
+                //}
             }
         }
 
-        public abstract void Run();
+        public abstract void Run(int[] seeds);
 
         protected abstract IEvaluation<E>[] GenerateProblems();
 

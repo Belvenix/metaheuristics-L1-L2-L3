@@ -15,7 +15,7 @@ namespace MetaheuristicsCS.Solutions
             return Lab1CheckoptimizerAgainstBinaryProblems<BinaryRandomSearch>(seed);
         }
 
-        private List<String> Lab1CheckoptimizerAgainstBinaryProblems<O>(int? seed, int maxIter = 500) where O : AOptimizer<bool>
+        private List<String> Lab1CheckoptimizerAgainstBinaryProblems<O>(int? seed, int maxIter = 1000) where O : AOptimizer<bool>
         {
             List<String> resultData = new List<String>();
 
@@ -36,7 +36,7 @@ namespace MetaheuristicsCS.Solutions
             return resultData;
         }
 
-        private List<String> Lab1CheckGreedyAgainstBinaryProblems(int? seed, int maxIter = 500)
+        private List<String> Lab1CheckGreedyAgainstBinaryProblems(int? seed, int maxIter = 1000)
         {
             List<String> resultData = new List<String>();
 
@@ -55,7 +55,7 @@ namespace MetaheuristicsCS.Solutions
             return resultData;
         }
 
-        private List<String> Lab1CheckRGSAgainstBinaryProblems(int conditionType, int? seed, int maxIter = 100)
+        private List<String> Lab1CheckRGSAgainstBinaryProblems(int conditionType, int? seed, int maxIter = 1000)
         {
             List<String> resultData = new List<String>();
 
@@ -174,24 +174,18 @@ namespace MetaheuristicsCS.Solutions
             return resultData;
         }
 
-        public override void Run()
+        public override void Run(int[] seeds)
         {
             List<String> resultData = new List<String>();
-            int[] seeds =
-            {
-                834423,  40287,   -446237, 397333,  -969750,
-                -801238, -467687, -696199, -535363, 40016,
-                296612,  -451761, 337344,  -442403, 757117,
-                528488,  -713088, -230556, -741328, -123544,
-                -823157, -586503, -257014, 52247,   207557
-            };
+            bool debug = true;
+
             int i = 1;
             Console.WriteLine("Start Lab1: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             foreach (int seed in seeds)
             {
                 resultData.AddRange(Lab1SeedRun(seed));
 
-                Console.WriteLine("Finished " + (i+1).ToString() + " seed of 25 for Lab1: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                if (debug) Console.WriteLine("Finished " + (i + 1).ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;
             }
             Console.WriteLine("Finished first Lab and saving: " + DateTime.Now);

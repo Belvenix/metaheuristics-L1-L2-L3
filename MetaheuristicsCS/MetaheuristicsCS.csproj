@@ -106,6 +106,7 @@
     <Compile Include="Solutions\ALab.cs" />
     <Compile Include="Solutions\Lab1.cs" />
     <Compile Include="Solutions\Lab2.cs" />
+    <Compile Include="Solutions\Lab3.cs" />
     <Compile Include="StopConditions\AStopCondition.cs" />
     <Compile Include="StopConditions\FFEStopCondition.cs" />
     <Compile Include="StopConditions\IterationsStopCondition.cs" />

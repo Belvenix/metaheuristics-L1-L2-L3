@@ -85,24 +85,18 @@ namespace MetaheuristicsCS.Solutions
             return resultData;
         }
 
-        public override void Run()
+        public override void Run(int[] seeds)
         {
             bool debug = true;
             List<String> resultData = new List<String>();
-            int[] seeds = {
-                -793664, -421376, -168249, 115931,  -557820,
-                -272699, 672083,  584213,  505012,  -429238,
-                -593089, 841130,  -973074, -291614, 236629,
-                -359627, -36357,  691113,  -857379, 573398,
-                -139481, -604859, 669982,  -187522, 632728
-            };
+            
             int i = 0;
 
-            Console.WriteLine("Start Lab1: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+            Console.WriteLine("Start Lab2: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             foreach (int seed in seeds)
             {
                 resultData.AddRange(Lab2CheckContinuousProblems(seed));
-                if (debug) Console.WriteLine("Finished " + (i+1).ToString() + " seed of 25 for Lab2: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                if (debug) Console.WriteLine("Finished " + (i + 1).ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;
             }
 
@@ -112,8 +106,8 @@ namespace MetaheuristicsCS.Solutions
 
         protected override IEvaluation<double>[] GenerateProblems()
         {
-            int[] genes = { 2, 5, 10, 25, 50, 75, 100};
-            int nProblems = genes.Length * 4;
+            int[] genes = { 2, 5, 10, 25, 50, 75 };
+            int nProblems = genes.Length * 6;
             IEvaluation<double>[] problems = new IEvaluation<double>[nProblems];
 
             int iterator = 0;
@@ -145,6 +139,23 @@ namespace MetaheuristicsCS.Solutions
                 problems[iterator] = new CRealStep2SphereEvaluation(gene);
                 iterator++;
             }
+
+            //Te problemy będą przydatne do 3 laborek
+
+            //Rastrigin
+            foreach (var gene in genes)
+            {
+                problems[iterator] = new CRealRastriginEvaluation(gene);
+                iterator++;
+            }
+
+            //Ackley
+            foreach (var gene in genes)
+            {
+                problems[iterator] = new CRealAckleyEvaluation(gene);
+                iterator++;
+            }
+
             return problems;
         }
 

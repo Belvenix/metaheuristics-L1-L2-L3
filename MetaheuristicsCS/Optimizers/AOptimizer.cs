@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using EvaluationsCLI;
+using MathNet.Numerics;
 using StopConditions;
 using Utility;
 
@@ -19,12 +20,14 @@ namespace Optimizers
 
         private long iterationNumber;
         private DateTime startTime;
+        public bool divergenceException {get; protected set;}
 
         public AOptimizer(IEvaluation<Element> evaluation, AStopCondition stopCondition)
         {
             Result = null;
             this.Evaluation = evaluation;
             this.StopCondition = stopCondition;
+            this.divergenceException = false;
         }
 
         public void Initialize()
@@ -52,7 +55,15 @@ namespace Optimizers
 
             while (!ShouldStop())
             {
-                RunIteration();
+                try
+                {
+                    RunIteration();
+                }
+                catch (NonConvergenceException exception)
+                {
+                    Console.WriteLine(exception.GetType());
+                    break;
+                }
             }
         }
 
