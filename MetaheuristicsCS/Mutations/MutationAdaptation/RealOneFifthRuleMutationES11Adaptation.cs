@@ -15,7 +15,7 @@ namespace Mutations
         private readonly Queue<bool> successes;
 
         public RealOneFifthRuleMutationES11Adaptation(RealGaussianMutation mutation)
-            :this(10, 2, mutation)
+            :this(10, 1.5, mutation)
         {
         }
 

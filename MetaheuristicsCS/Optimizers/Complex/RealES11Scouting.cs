@@ -17,7 +17,7 @@ namespace MetaheuristicsCS.Optimizers.Complex
         public bool maxScoutingWalking;
 
         public RealES11Scouting(IEvaluation<double> evaluation, AStopCondition stopCondition, ARealMutationES11Adaptation mutationAdaptation, int? seed)
-            :this(evaluation, stopCondition, mutationAdaptation, seed, 5, 2)
+            :this(evaluation, stopCondition, mutationAdaptation, seed, 10, 1.5)
         {
 
         }
@@ -45,7 +45,11 @@ namespace MetaheuristicsCS.Optimizers.Complex
             }
             else
             {
-                mutationAdaptation.Mutation.MultiplySigmas(1 / scoutingMultiplier);
+                if (mutationAdaptation.Mutation.Sigmas(0) > 1)
+                {
+                    mutationAdaptation.Mutation.MultiplySigmas(1 / scoutingMultiplier);
+                }
+                
             }
 
             return check;

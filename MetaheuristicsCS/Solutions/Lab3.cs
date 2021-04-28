@@ -37,15 +37,15 @@ namespace MetaheuristicsCS.Solutions
             List<String> t;
             if (debug) Console.WriteLine("CMAES: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab3CheckoptimizerAgainstContinuousProblems<CMAES>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-benchmark.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab3-benchmark.txt", t);
 
             if (debug) Console.WriteLine("ES(1+1) one-fifth: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab3CheckMineHistory(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-one-fifth.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab3-one-fifth.txt", t);
 
             if (debug) Console.WriteLine("ES(1+1) scouting: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab3CheckSpaceAnalysisAroundSol(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab3-scouting.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab3-scouting.txt", t);
         }
 
         private List<String> Lab3CheckoptimizerAgainstContinuousProblems<O>(int? seed, int maxIter = 1000) where O : AOptimizer<double>
@@ -75,16 +75,17 @@ namespace MetaheuristicsCS.Solutions
             List<String> resultData = new List<String>();
 
             IEvaluation<double>[] benchmarkProblems = GenerateProblems();
+
             foreach (var problem in benchmarkProblems)
             {
                 problem.pcConstraint.tGetLowerBound(0);
                 List<double> sigmas = Enumerable.Repeat(0.1, problem.iSize).ToList();
 
-                IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
+                IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, 1000);
                 RealGaussianMutation mutation = new RealGaussianMutation(sigmas, problem, seed);
                 var mutationAdaptation = new RealNullRealMutationES11Adaptation(mutation);
 
-                RealEvolutionStrategy11 optimizer = new RealES11Scouting(problem, stopCondition, mutationAdaptation, seed);
+                RealEvolutionStrategy11 optimizer = new RealES11Scouting(problem, stopCondition, mutationAdaptation, seed, 1, 4);
 
                 optimizer.Run();
 
@@ -92,13 +93,36 @@ namespace MetaheuristicsCS.Solutions
 
                 ReportOptimizationResult(optimizer.Result);
             }
-
+                
             return resultData;
         }
 
         private List<String> Lab3CheckMineHistory(int? seed)
         {
-            return Lab2CheckAdaptationAgainstContinuousProblems<RealOneFifthRuleMutationES11Adaptation>(seed);
+            List<String> resultData = new List<String>();
+
+            IEvaluation<double>[] benchmarkProblems = GenerateProblems();
+
+            foreach (var problem in benchmarkProblems)
+            {
+                        
+                problem.pcConstraint.tGetLowerBound(0);
+                List<double> sigmas = Enumerable.Repeat(0.1, problem.iSize).ToList();
+
+                IterationsStopCondition stopCondition = new IterationsStopCondition(problem.dMaxValue, 10000);
+                RealGaussianMutation mutation = new RealGaussianMutation(sigmas, problem, seed);
+                var mutationAdaptation = new RealOneFifthRuleMutationES11Adaptation(5, 20, mutation);
+
+                RealEvolutionStrategy11 optimizer = new RealEvolutionStrategy11(problem, stopCondition, mutationAdaptation, seed);
+
+                optimizer.Run();
+
+                resultData.Add(FormatSave(optimizer));
+
+                ReportOptimizationResult(optimizer.Result);
+            }
+           
+            return resultData;
         }
 
         private List<String> Lab3CheckSpaceAnalysisAroundSol(int? seed)

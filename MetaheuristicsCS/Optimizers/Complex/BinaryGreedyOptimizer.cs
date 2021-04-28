@@ -1,17 +1,18 @@
 ﻿using EvaluationsCLI;
 using Generators;
-using MetaheuristicsCS.Utility;
 using Optimizers;
 using StopConditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Utility;
 
 namespace MetaheuristicsCS.Optimizers.Complex
 {
     class BinaryGreedyOptimizer : AOptimizer<bool>
     {
         private List<bool> optimizedSolution;
+        private readonly Shuffler shuffler;
         private readonly Random rnd;
 
         public BinaryGreedyOptimizer(IEvaluation<bool> evaluation, List<bool> solution, AStopCondition stopCondition = null, int? seed = null)
@@ -20,10 +21,12 @@ namespace MetaheuristicsCS.Optimizers.Complex
             optimizedSolution = solution;
             if (seed == null)
             {
+                shuffler = new Shuffler();
                 rnd = new Random();
             }
             else
             {
+                shuffler = new Shuffler(seed.Value);
                 rnd = new Random(seed.Value);
             }
         }
@@ -54,7 +57,7 @@ namespace MetaheuristicsCS.Optimizers.Complex
 
         protected override bool RunIteration(long itertionNumber, DateTime startTime)
         {
-            List<int> optOrder = Shuffler.GenereteShuffledOrder(optimizedSolution.Count, rnd);
+            List<int> optOrder = shuffler.GenereteShuffledOrder(optimizedSolution.Count, rnd);
             foreach (int order in optOrder)
             {
                 optimizedSolution[order] = !optimizedSolution[order];

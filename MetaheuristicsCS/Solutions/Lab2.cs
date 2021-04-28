@@ -17,23 +17,23 @@ namespace MetaheuristicsCS.Solutions
 
             if (debug) Console.WriteLine("Benchmarked problems (No Mutation Adaptation): " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab2CheckAdaptationAgainstContinuousProblems<RealNullRealMutationES11Adaptation>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-benchmark.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab2-benchmark.txt", t);
 
             if (debug) Console.WriteLine("Simulated Annealing MA " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab2CheckAdaptationAgainstContinuousProblems<RealSimulatedAnnealingMutationAdaptation>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-sa.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab2-sa.txt", t);
 
             if (debug) Console.WriteLine("Igniting Simulated Annealing MA problems: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab2CheckAdaptationAgainstContinuousProblems<RealIgnitingSimAnnMutationAdaptation>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-isa.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab2-isa.txt", t);
 
             if (debug) Console.WriteLine("Simulated Annealing MA with Domain Knowledge: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeSimAnnAdaptationMutation>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-dksa.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab2-dksa.txt", t);
 
             if (debug) Console.WriteLine("Igniting Simulated Annealing MA with Domain Knowledge: " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab2CheckAdaptationAgainstContinuousProblemsWithDomainKnowledge<RealDomainKnowledgeIgnSimAnnMutationAdaptation>(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab2-dkisa.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab2-dkisa.txt", t);
 
         }
 

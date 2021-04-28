@@ -14,5 +14,10 @@ namespace Utility
         {
             return a + rng.NextDouble() * (b - a);
         }
+
+        public double Next()
+        {
+            return rng.NextDouble();
+        }
     }
 }

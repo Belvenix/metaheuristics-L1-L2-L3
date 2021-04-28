@@ -19,7 +19,7 @@ namespace MetaheuristicsCS.Optimizers.Complex
             : base(evaluation, stopCondition)
         {
             generator = new BinaryRandomGenerator(evaluation.pcConstraint, seed);
-            greedyOptimizer = new BinaryGreedyOptimizer(evaluation, null, greedyStopCondition);
+            greedyOptimizer = new BinaryGreedyOptimizer(evaluation, null, greedyStopCondition, seed);
         }
 
         protected override void Initialize(DateTime startTime)

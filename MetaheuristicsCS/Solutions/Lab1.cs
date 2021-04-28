@@ -74,12 +74,12 @@ namespace MetaheuristicsCS.Solutions
                         greedyStopCondition = new IterationsStopCondition(problem.dMaxValue, 1);
                         break;
                     case 2:
-                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter / 4);
+                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
                         greedyStopCondition = new IterationsStopCondition(problem.dMaxValue, 4);
                         break;
                     case 3:
                     default:
-                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter / 10);
+                        stopCondition = new IterationsStopCondition(problem.dMaxValue, maxIter);
                         greedyStopCondition = new SignificantImprovementsStopCondition(problem.dMaxValue, maxIter / 100);
                         break;
                 }
@@ -167,20 +167,20 @@ namespace MetaheuristicsCS.Solutions
             if (debug) Console.WriteLine("Benchmarked problems: " + DateTime.Now.ToString("HH:mm:ss.fff"));
 
             t = Lab1CheckBinaryProblems(seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-benchmark.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab1-benchmark.txt", t);
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=1) " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab1CheckRGSAgainstBinaryProblems(1, seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-1.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-1.txt", t);
 
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=4) " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab1CheckRGSAgainstBinaryProblems(2, seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-4.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-4.txt", t);
 
             if (debug) Console.WriteLine("Greedy Random Search implementation results (greedyRepeats=custom) " + DateTime.Now.ToString("HH:mm:ss.fff"));
             t = Lab1CheckRGSAgainstBinaryProblems(3, seed);
-            SaveToFile(@"C:\Users\jbelter\Desktop\2021.03.16 metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-custom.txt", t);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab1-greedy-custom.txt", t);
 
         }
 
