@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BinaryEvaluationInstances.h"
 #include "BinaryConstraints.h"
 #include "Constraint.h"
 #include "Evaluation.h"
@@ -7,7 +8,9 @@
 #include "P3Evaluation.h"
 
 #include <cmath>
+#include <fstream>
 #include <string>
+#include <vector>
 
 using namespace Constraints;
 
@@ -115,4 +118,34 @@ namespace Evaluations
 	private:
 		NearestNeighborNK *pc_p3_nk_landscapes;
 	};//class CBinaryNKLandscapesEvaluation : public CBinaryEvaluation
+
+
+	class CBinaryKnapsackEvaluation : public CBinaryEvaluation
+	{
+	public:
+		CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance);
+
+		double dCalculateWeight(vector<bool> &vSolution);
+
+		vector<double> &vGetWeights() { return v_weights; }
+		vector<double> &vGetProfits() { return v_profits; }
+		double dGetCapacity() { return d_capacity; }
+
+		void bSetPenalized(bool is_penalized) { penalized = is_penalized; }
+
+	protected:
+		virtual double d_evaluate(vector<bool> &vSolution);
+
+		virtual double d_penalty(vector<bool>& vSolution);
+
+	private:
+		void v_load(EBinaryKnapsackInstance eInstance);
+		void v_load_definition_file(string &sDefinitionFilePath);
+		void v_load_optimum_file(string &sOptimumFilePath);
+
+		vector<double> v_weights;
+		vector<double> v_profits;
+		double d_capacity;
+		bool penalized;
+	};//class CBinaryKnapsackEvaluation : public CBinaryEvaluation
 }//namespace Evaluations

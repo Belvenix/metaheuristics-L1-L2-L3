@@ -96,3 +96,30 @@ CBinaryNKLandscapesEvaluation::CBinaryNKLandscapesEvaluation(int iSize, int iPro
 {
 
 }//CBinaryNKLandscapesEvaluation::CBinaryNKLandscapesEvaluation(int iSize, int iProblemSeed)
+
+
+CBinaryKnapsackEvaluation::CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance)
+	: pc_native_binary_knapsack_evaluation(new Evaluations::CBinaryKnapsackEvaluation((Evaluations::EBinaryKnapsackInstance)eInstance)), CBinaryEvaluation(pc_native_binary_knapsack_evaluation)
+{
+	l_weights = gcnew List<double>(pc_native_binary_knapsack_evaluation->iGetSize());
+	l_profits = gcnew List<double>(pc_native_binary_knapsack_evaluation->iGetSize());
+
+	for (int i = 0; i < pc_native_binary_knapsack_evaluation->iGetSize(); i++)
+	{
+		l_weights->Add(pc_native_binary_knapsack_evaluation->vGetWeights()[(size_t)i]);
+		l_profits->Add(pc_native_binary_knapsack_evaluation->vGetProfits()[(size_t)i]);
+	}//for (int i = 0; i < pc_native_binary_knapsack_evaluation->iGetSize(); i++)
+}//CBinaryKnapsackEvaluation::CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance)
+
+double CBinaryKnapsackEvaluation::dCalculateWeight(IList<bool> ^lSolution)
+{
+	vector<bool> v_solution(0);
+	v_solution.reserve((size_t)lSolution->Count);
+
+	for (int i = 0; i < lSolution->Count; i++)
+	{
+		v_solution.push_back(lSolution[i]);
+	}//for (int i = 0; i < lSolution->Count; i++)
+
+	return pc_native_binary_knapsack_evaluation->dCalculateWeight(v_solution);
+}//double CBinaryKnapsackEvaluation::dCalculateWeight(IList<bool> ^lSolution)

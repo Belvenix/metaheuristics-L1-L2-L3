@@ -17,6 +17,7 @@ namespace MetaheuristicsCS.Solutions
             if (debug) Console.WriteLine("\twhen (time): {0}s", optimizationResult.BestTime);
             if (debug) Console.WriteLine("\twhen (iteration): {0}", optimizationResult.BestIteration);
             if (debug) Console.WriteLine("\twhen (FFE): {0}", optimizationResult.BestFFE);
+            
         }
 
         protected static String FormatOptimizationResult(OptimizationResult<E> optimizationResult)

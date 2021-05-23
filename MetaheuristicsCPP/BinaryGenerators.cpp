@@ -13,6 +13,8 @@ void CBinaryRandomGenerator::vFill(vector<bool> &vSolution)
 {
 	bool b_lower_bound, b_upper_bound;
 
+	bernoulli_distribution c_distr;
+
 	for (size_t i = 0; i < vSolution.size(); i++)
 	{
 		b_lower_bound = c_constraint.tGetLowerBound((int)i);
@@ -24,7 +26,6 @@ void CBinaryRandomGenerator::vFill(vector<bool> &vSolution)
 		}//if (b_lower_bound == b_upper_bound)
 		else
 		{
-			bernoulli_distribution c_distr(0.5);
 			vSolution[i] = c_distr(c_random_engine);
 		}//else if (b_lower_bound == b_upper_bound)
 	}//for (size_t i = 0; i < vSolution.size(); i++)

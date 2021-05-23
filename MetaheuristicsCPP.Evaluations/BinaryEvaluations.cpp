@@ -181,3 +181,123 @@ double CBinaryNKLandscapesEvaluation::d_evaluate(vector<bool> &vSolution)
 {
 	return pc_p3_nk_landscapes->evaluate(vSolution);
 }//double CBinaryNKLandscapesEvaluation::d_evaluate(vector<bool> &vSolution)
+
+
+CBinaryKnapsackEvaluation::CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance)
+	: CBinaryEvaluation(0, 0)
+{
+	v_load(eInstance);
+	CBinaryKnapsackEvaluation::bSetPenalized(false);
+}//CBinaryKnapsackEvaluation::CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance)
+
+double CBinaryKnapsackEvaluation::dCalculateWeight(vector<bool> &vSolution)
+{
+	double d_weight = 0;
+
+	for (int i = 0; i < iGetSize(); i++)
+	{
+		if (vSolution[i])
+		{
+			d_weight += v_weights[i];
+		}//if (vSolution[i])
+	}//for (int i = 0; i < iGetSize(); i++)
+
+	return d_weight;
+}//double CBinaryKnapsackEvaluation::dCalculateWeight(vector<bool> &vSolution)
+
+double CBinaryKnapsackEvaluation::d_evaluate(vector<bool> &vSolution)
+{
+	double d_value = 0;
+
+	for (int i = 0; i < iGetSize(); i++)
+	{
+		if (vSolution[i])
+		{
+			d_value += v_profits[i];
+		}//if (vSolution[i])
+	}//for (int i = 0; i < iGetSize(); i++)
+	
+	if (penalized)
+		d_value -= CBinaryKnapsackEvaluation::d_penalty(vSolution);
+
+	return d_value;
+}//double CBinaryKnapsackEvaluation::d_evaluate(vector<bool> &vSolution)
+
+double CBinaryKnapsackEvaluation::d_penalty(vector<bool>& vSolution)
+{
+	double d_penalty = 0, d_penalty_ratio = 0;
+
+	for (int i = 0; i < iGetSize(); i++)
+	{
+		if (vSolution[i])
+		{	
+			double d_tmp_penalty_ratio = v_weights[i] / v_profits[i];
+			if (d_penalty_ratio < d_tmp_penalty_ratio)
+				d_penalty_ratio = d_tmp_penalty_ratio;
+		}//if (vSolution[i])
+	}//for (int i = 0; i < iGetSize(); i++)
+
+	d_penalty = (dCalculateWeight(vSolution) - dGetCapacity()) * d_penalty_ratio;
+	return d_penalty;
+}//double CBinaryKnapsackEvaluation::d_evaluate(vector<bool> &vSolution)
+
+void CBinaryKnapsackEvaluation::v_load(EBinaryKnapsackInstance eInstance)
+{
+	SBinaryKnapsackInstanceFilePaths *pc_file_paths = SBinaryKnapsackInstanceFilePaths::pcCreate(eInstance);
+
+	v_load_definition_file(pc_file_paths->sDefinitionFilePath);
+	v_load_optimum_file(pc_file_paths->sOptimumFilePath);
+
+	delete pc_file_paths;
+}//void CBinaryKnapsackEvaluation::v_load(EBinaryKnapsackInstance eInstance)
+
+void CBinaryKnapsackEvaluation::v_load_definition_file(string &sDefinitionFilePath)
+{
+	ifstream f_definition_file(sDefinitionFilePath);
+
+	if (!f_definition_file)
+	{
+		throw invalid_argument(sDefinitionFilePath + " not found");
+	}//if (!f_definition_file)
+
+	int i_size;
+	f_definition_file >> i_size;
+	v_set_size(i_size);
+
+	f_definition_file >> d_capacity;
+
+	double d_profit, d_weight;
+
+	v_profits.clear();
+	v_profits.reserve((size_t)i_size);
+
+	v_weights.clear();
+	v_weights.reserve((size_t)i_size);
+
+	for (int i = 0; i < i_size; i++)
+	{
+		f_definition_file >> d_profit;
+		f_definition_file >> d_weight;
+
+		v_profits.push_back(d_profit);
+		v_weights.push_back(d_weight);
+	}//for (int i = 0; i < i_size; i++)
+
+	f_definition_file.close();
+}//void CBinaryKnapsackEvaluation::v_load_definition_file(string &sDefinitionFilePath)
+
+void CBinaryKnapsackEvaluation::v_load_optimum_file(string &sOptimumFilePath)
+{
+	ifstream f_optimum_file(sOptimumFilePath);
+
+	if (!f_optimum_file)
+	{
+		throw invalid_argument(sOptimumFilePath + " not found");
+	}//if (!f_optimum_file)
+
+	double d_max_value;
+	f_optimum_file >> d_max_value;
+	v_set_max_value(d_max_value);
+
+	f_optimum_file.close();
+}//void CBinaryKnapsackEvaluation::v_load_optimum_file(string &sOptimumFilePath)

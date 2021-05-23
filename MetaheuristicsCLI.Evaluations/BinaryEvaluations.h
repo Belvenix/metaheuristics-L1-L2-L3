@@ -1,9 +1,11 @@
 #pragma once
 
+#include "BinaryEvaluationInstances.h"
 #include "BinaryConstraints.h"
 #include "Evaluation.h"
 
 #include <BinaryEvaluations.h>
+#include <BinaryEvaluationInstances.h>
 
 using namespace System::Collections::Generic;
 
@@ -37,7 +39,7 @@ namespace EvaluationsCLI
 		virtual property long long iFFE
 		{
 			long long get() { return pc_native_binary_evaluation->iGetFFE(); }
-		}//property long long iFFE
+		}//virtual property long long iFFE
 
 	private:
 		Evaluations::IEvaluation<bool> *pc_native_binary_evaluation;
@@ -88,4 +90,36 @@ namespace EvaluationsCLI
 		CBinaryNKLandscapesEvaluation(int iSize);
 		CBinaryNKLandscapesEvaluation(int iSize, int iProblemSeed);
 	};//public ref class CBinaryNKLandscapesEvaluation : public CBinaryEvaluation
+
+
+	public ref class CBinaryKnapsackEvaluation : public CBinaryEvaluation
+	{
+	public:
+		CBinaryKnapsackEvaluation(EBinaryKnapsackInstance eInstance);
+
+		double dCalculateWeight(IList<bool> ^lSolution);
+
+		property IList<double> ^lWeights
+		{
+			IList<double> ^get() { return l_weights; }
+		}//property IList<double> ^lWeights
+
+		property IList<double> ^lProfits
+		{
+			IList<double> ^get() { return l_profits; }
+		}//property IList<double> ^lProfits
+
+		property double dCapacity
+		{
+			double get() { return pc_native_binary_knapsack_evaluation->dGetCapacity(); }
+		}//property double dCapacity
+
+		void bSetPenalized(bool is_penalized) { pc_native_binary_knapsack_evaluation->bSetPenalized(is_penalized); }
+
+	private:
+		Evaluations::CBinaryKnapsackEvaluation *pc_native_binary_knapsack_evaluation;
+
+		IList<double> ^l_weights;
+		IList<double> ^l_profits;
+	};//public ref class CBinaryKnapsackEvaluation : public CBinaryEvaluation
 }//namespace EvaluationsCLI

@@ -24,7 +24,7 @@ namespace Mutations
 
 
 	template <typename TElement>
-	class CMutation
+	class CMutation : public IMutation<TElement>
 	{
 	public:
 		CMutation(double dProbability, IEvaluationProfile<TElement> &cEvaluationProfile, mt19937 &cRandomEngine)
@@ -43,7 +43,7 @@ namespace Mutations
 
 	private:
 		double d_probability;
-	};//class CMutation
+	};//class CMutation : public IMutation<TElement>
 
 
 	template <typename TElement>

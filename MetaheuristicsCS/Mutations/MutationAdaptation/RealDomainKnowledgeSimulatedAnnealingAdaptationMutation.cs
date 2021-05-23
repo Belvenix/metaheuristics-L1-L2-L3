@@ -13,17 +13,17 @@ namespace MetaheuristicsCS.Mutations
         private readonly IEvaluation<double> problem;
 
         public RealDomainKnowledgeSimAnnAdaptationMutation(RealGaussianMutation mutation, IEvaluation<double> problem)
-            :this(mutation, problem, .25, 1000, .05)
+            :this(mutation, problem, .25, .05)
         {
         }
 
-        public RealDomainKnowledgeSimAnnAdaptationMutation(RealGaussianMutation mutation, IEvaluation<double> problem, double initialScopePercent = .25, double startTemperature = 1000, double temperatureDropCoef = .05)
-            : base(mutation, startTemperature, temperatureDropCoef)
+        public RealDomainKnowledgeSimAnnAdaptationMutation(RealGaussianMutation mutation, IEvaluation<double> problem, double initialScopePercent = .25, double temperatureDropCoef = .05)
+            : base(mutation, 1, temperatureDropCoef)
         {
             this.problem = problem;
 
             // Resetujemy tutaj wartosci sigm, ktore zostaly przemnozone w podstawowej funkcji
-            mutation.MultiplySigmas(1/startTemperature);
+            mutation.MultiplySigmas(1);
 
             // Inicjalizacja sigm za pomocą wiedzy o problemie
             for (int i = 0; i < problem.iSize; i++)

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using MetaheuristicsCS.Optimizers.PopulationOptimizers;
 using Optimizers.PopulationOptimizers;
 
 namespace Selections
@@ -15,5 +15,15 @@ namespace Selections
         }
 
         protected abstract void AddToNewPopulation<Element>(List<Individual<Element>> population, List<Individual<Element>> newPopulation);
+
+        public void SelectEncoded<Element>(ref List<EncodedIndividual<Element>> population)
+        {
+            List<EncodedIndividual<Element>> newPopulation = new List<EncodedIndividual<Element>>(population.Count);
+
+            AddToNewPopulationEncoded(population, newPopulation);
+            population = newPopulation;
+        }
+
+        protected abstract void AddToNewPopulationEncoded<Element>(List<EncodedIndividual<Element>> population, List<EncodedIndividual<Element>> newPopulation);
     }
 }

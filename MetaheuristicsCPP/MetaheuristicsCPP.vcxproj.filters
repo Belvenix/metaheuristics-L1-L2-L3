@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Generators">
       <UniqueIdentifier>{a10c7a94-d0bd-47f4-96d0-fc52451e4465}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Crossovers">
+      <UniqueIdentifier>{27cd31c7-760d-4fa7-8b34-daf9a1202170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Selections">
+      <UniqueIdentifier>{80d50653-177e-4c9c-803d-f0811a55ba0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crossovers">
+      <UniqueIdentifier>{b0f0610b-994c-4911-8fe8-7c76203d57a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Selections">
+      <UniqueIdentifier>{e23d85af-26b1-4b6d-80aa-16c763bc0b66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -83,6 +95,24 @@
     </ClCompile>
     <ClCompile Include="RealCMAES.cpp">
       <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryCrossovers.cpp">
+      <Filter>Source Files\Crossovers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryGeneticAlgorithm.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryKnapsackGeneticAlgorithm.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryKnapsackIndividual.cpp">
+      <Filter>Source Files\Optimizers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryKnapsackSelection.cpp">
+      <Filter>Source Files\Selections</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryKnapsackSelections.cpp">
+      <Filter>Source Files\Selections</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +178,33 @@
     </ClInclude>
     <ClInclude Include="RealCMAES.h">
       <Filter>Header Files\Optimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="Crossover.h">
+      <Filter>Header Files\Crossovers</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryCrossovers.h">
+      <Filter>Header Files\Crossovers</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection.h">
+      <Filter>Header Files\Selections</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryGeneticAlgorithm.h">
+      <Filter>Header Files\Optimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="Selections.h">
+      <Filter>Header Files\Selections</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryKnapsackGeneticAlgorithm.h">
+      <Filter>Header Files\Optimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryKnapsackIndividual.h">
+      <Filter>Header Files\Optimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryKnapsackSelection.h">
+      <Filter>Header Files\Selections</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryKnapsackSelections.h">
+      <Filter>Header Files\Selections</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

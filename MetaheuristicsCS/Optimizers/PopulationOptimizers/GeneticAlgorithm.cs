@@ -13,7 +13,7 @@ namespace Optimizers.PopulationOptimizers
 {
     class GeneticAlgorithm<Element> : APopulationOptimizer<Element>
     {
-        protected ACrossover crossover;
+        public ACrossover crossover;
 
         public GeneticAlgorithm(IEvaluation<Element> evaluation, AStopCondition stopCondition, AGenerator<Element> generator, 
                                 ASelection selection, ACrossover crossover, IMutation<Element> mutation, int populationSize)

@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>MetaheuristicsCLR</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>MetaheuristicsCLI.Evaluations</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryConstraints.h" />
+    <ClInclude Include="BinaryEvaluationInstances.h" />
     <ClInclude Include="BinaryEvaluations.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="Evaluation.h" />

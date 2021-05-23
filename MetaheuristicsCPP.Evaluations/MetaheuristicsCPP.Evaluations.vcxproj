@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryEvaluationInstances.cpp" />
     <ClCompile Include="BinaryEvaluations.cpp" />
     <ClCompile Include="P3Configuration.cpp" />
     <ClCompile Include="P3Evaluation.cpp" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryConstraints.h" />
+    <ClInclude Include="BinaryEvaluationInstances.h" />
     <ClInclude Include="BinaryEvaluations.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="Evaluation.h" />
@@ -1538,13 +1540,196 @@
     <Content Include="EvaluationsInputs\IsingSpinGlass_pm_81_9.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f1_l-d_kp_10_269">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f1_l-d_kp_10_269">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f2_l-d_kp_20_878">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f2_l-d_kp_20_878">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f3_l-d_kp_4_20">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f3_l-d_kp_4_20">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f4_l-d_kp_4_11">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f4_l-d_kp_4_11">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f5_l-d_kp_15_375">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f5_l-d_kp_15_375">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f6_l-d_kp_10_60">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f6_l-d_kp_10_60">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f7_l-d_kp_7_50">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f7_l-d_kp_7_50">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f8_l-d_kp_23_10000">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f8_l-d_kp_23_10000">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f9_l-d_kp_5_80">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional-optimum\f9_l-d_kp_5_80">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\low-dimensional\f10_l-d_kp_20_879">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_1_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_1_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_2_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_2_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_100_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_200_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_500_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_1000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_2000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_5000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale\knapPI_3_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EvaluationsInputs\instances_01_KP\large_scale-optimum\knapPI_3_10000_1000_1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{57DA5D67-839E-4B20-8434-E0DAAC632F0B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MetaheuristicsCPPEvaluations</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

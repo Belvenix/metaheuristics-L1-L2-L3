@@ -9,13 +9,11 @@ namespace MetaheuristicsCS.Optimizers.PopulationOptimizers
     class EncodedIndividual<Element> : Individual<Element>
     {
 
-        private readonly int? seed;
         private readonly Shuffler shuffler;
 
         public EncodedIndividual(List<Element> genotype, int? seed)
             : base(genotype)
         {
-            this.seed = seed;
             if (seed != null)
             {
                 shuffler = new Shuffler(seed.Value);
@@ -30,6 +28,7 @@ namespace MetaheuristicsCS.Optimizers.PopulationOptimizers
         public override double Evaluate(IEvaluation<Element> evaluation)
         {
             List<Element> shuffledGenotype = new List<Element>(this.Genotype);
+            shuffler.Shuffle(shuffledGenotype);
             if (!evaluated)
             {
                 Fitness = evaluation.dEvaluate(shuffledGenotype);

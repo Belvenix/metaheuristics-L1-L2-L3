@@ -48,11 +48,11 @@ namespace Mutations
 
                 if (ratio > OneFifth)
                 {
-                    Mutation.MultiplySigmas(1.0 / modifier);
+                    Mutation.MultiplySigmas(modifier);
                 }
                 else if (ratio < OneFifth)
                 {
-                    Mutation.MultiplySigmas(modifier);
+                    Mutation.MultiplySigmas(1.0 / modifier);
                 }
             }
         }

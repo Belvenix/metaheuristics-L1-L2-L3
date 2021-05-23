@@ -14,9 +14,9 @@ namespace Optimizers.PopulationOptimizers
     {
         protected readonly AGenerator<Element> generator;
         protected readonly ASelection selection;
-        protected readonly IMutation<Element> mutation;
+        public readonly IMutation<Element> mutation;
 
-        protected readonly int populationSize;
+        public readonly int populationSize;
         public List<Individual<Element>> population;
 
         public APopulationOptimizer(IEvaluation<Element> evaluation, AStopCondition stopCondition, AGenerator<Element> generator, 
@@ -31,7 +31,7 @@ namespace Optimizers.PopulationOptimizers
             population = new List<Individual<Element>>();
         }
 
-        protected override sealed void Initialize(DateTime startTime)
+        protected override void Initialize(DateTime startTime)
         {
             population.Clear();
             for(int i = 0; i < populationSize; ++i)
@@ -43,7 +43,7 @@ namespace Optimizers.PopulationOptimizers
             CheckNewBest();
         }
 
-        protected void Evaluate()
+        protected virtual void Evaluate()
         {
             foreach(Individual<Element> individual in population)
             {

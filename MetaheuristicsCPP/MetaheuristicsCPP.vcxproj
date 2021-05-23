@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{0350C47D-34F7-40B2-9A35-E8F7AD5A0C0F}</ProjectGuid>
     <RootNamespace>Metaheuristics</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>MetaheuristicsCPP</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,13 +127,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryCrossovers.h" />
     <ClInclude Include="BinaryGenerators.h" />
+    <ClCompile Include="BinaryCrossovers.cpp" />
     <ClCompile Include="BinaryGenerators.cpp" />
+    <ClCompile Include="BinaryGeneticAlgorithm.cpp" />
+    <ClCompile Include="BinaryKnapsackGeneticAlgorithm.cpp" />
+    <ClCompile Include="BinaryKnapsackIndividual.cpp" />
+    <ClCompile Include="BinaryKnapsackSelection.cpp" />
+    <ClCompile Include="BinaryKnapsackSelections.cpp" />
     <ClCompile Include="BinaryMutations.cpp" />
     <ClCompile Include="BinaryRandomSearch.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClInclude Include="BinaryGeneticAlgorithm.h" />
+    <ClInclude Include="BinaryKnapsackGeneticAlgorithm.h" />
+    <ClInclude Include="BinaryKnapsackIndividual.h" />
+    <ClInclude Include="BinaryKnapsackSelection.h" />
+    <ClInclude Include="BinaryKnapsackSelections.h" />
     <ClInclude Include="BinaryMutations.h" />
     <ClInclude Include="BinaryRandomSearch.h" />
+    <ClInclude Include="Crossover.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="Mutation.h" />
     <ClInclude Include="RealCMAES.h" />
@@ -151,6 +164,8 @@
     <ClInclude Include="RealEvolutionStrategy11.h" />
     <ClInclude Include="RealMutationES11Adaptations.h" />
     <ClInclude Include="RealRandomSearch.h" />
+    <ClInclude Include="Selection.h" />
+    <ClInclude Include="Selections.h" />
     <ClInclude Include="VectorUtils.h" />
   </ItemGroup>
   <ItemGroup>

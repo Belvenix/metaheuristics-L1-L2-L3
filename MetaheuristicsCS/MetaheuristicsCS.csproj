@@ -99,9 +99,14 @@
     <Compile Include="Optimizers\Complex\RealES11Scouting.cs" />
     <Compile Include="Optimizers\OptimizationResult.cs" />
     <Compile Include="Optimizers\PopulationOptimizers\APopulationOptimizer.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\DSMGA.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\EncodedGA.cs" />
     <Compile Include="Optimizers\PopulationOptimizers\EncodedIndividual.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\GAStallDetection.cs" />
     <Compile Include="Optimizers\PopulationOptimizers\GeneticAlgorithm.cs" />
     <Compile Include="Optimizers\PopulationOptimizers\Individual.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\IslandModel.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\KnapsackGA.cs" />
     <Compile Include="Optimizers\PopulationOptimizers\MutatedIslandGA.cs" />
     <Compile Include="Optimizers\RandomSearch\BinaryRandomSearch.cs" />
     <Compile Include="Optimizers\RandomSearch\RealRandomSearch.cs" />
@@ -119,6 +124,10 @@
     <Compile Include="Solutions\Lab1.cs" />
     <Compile Include="Solutions\Lab2.cs" />
     <Compile Include="Solutions\Lab3.cs" />
+    <Compile Include="Solutions\Lab4.cs" />
+    <Compile Include="Solutions\Lab5.cs" />
+    <Compile Include="Solutions\Lab6.cs" />
+    <Compile Include="Solutions\Lab7.cs" />
     <Compile Include="StopConditions\AStopCondition.cs" />
     <Compile Include="StopConditions\FFEStopCondition.cs" />
     <Compile Include="StopConditions\IterationsStopCondition.cs" />

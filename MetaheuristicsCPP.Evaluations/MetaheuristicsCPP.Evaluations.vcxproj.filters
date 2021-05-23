@@ -51,6 +51,9 @@
     <ClCompile Include="P3Util.cpp">
       <Filter>Source Files\Evaluations\P3</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryEvaluationInstances.cpp">
+      <Filter>Source Files\Evaluations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryConstraints.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="P3Util.h">
       <Filter>Header Files\Evaluations\P3</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryEvaluationInstances.h">
+      <Filter>Header Files\Evaluations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

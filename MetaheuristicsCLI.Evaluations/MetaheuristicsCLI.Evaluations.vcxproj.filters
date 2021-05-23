@@ -45,6 +45,9 @@
     <ClInclude Include="RealEvaluations.h">
       <Filter>Header Files\Evaluations</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryEvaluationInstances.h">
+      <Filter>Header Files\Evaluations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryEvaluations.cpp">

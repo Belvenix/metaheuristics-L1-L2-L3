@@ -64,6 +64,9 @@ namespace Evaluations
 	protected:
 		virtual double d_evaluate(vector<TElement> &vSolution) = 0;
 
+		void v_set_size(int iSize) { i_size = iSize; }
+		void v_set_max_value(double dMaxValue) { d_max_value = dMaxValue; }
+
 	private:
 		int i_size;
 		double d_max_value;

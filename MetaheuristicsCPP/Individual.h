@@ -17,15 +17,18 @@ namespace Optimizers
 	{
 	public:
 		CIndividual(vector<TElement> *pvGenotype, IEvaluation<TElement> &cEvaluation, IMutation<TElement> &cMutation)
-			: c_evaluation(cEvaluation), c_mutation(cMutation)
+			: pv_genotype(pvGenotype), c_evaluation(cEvaluation), c_mutation(cMutation)
 		{
-
+			b_is_evaluated = false;
 		}//CIndividual(vector<TElement> *pvGenotype, IEvaluation<TElement> &cEvaluation, IMutation<TElement> &cMutation)
 
 		CIndividual(const CIndividual<TElement> &cOther)
 			: c_evaluation(cOther.c_evaluation), c_mutation(cOther.c_mutation)
 		{
-			pv_genotype = new vector<double>(*cOther.pv_genotype);
+			pv_genotype = new vector<TElement>(*cOther.pv_genotype);
+
+			d_fitness = cOther.d_fitness;
+			b_is_evaluated = cOther.b_is_evaluated;
 		}//CIndividual(const CIndividual<TElement> &cOther)
 
 		~CIndividual()

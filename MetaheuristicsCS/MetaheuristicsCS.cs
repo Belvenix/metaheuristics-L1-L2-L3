@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using EvaluationsCLI;
+using Generators;
 using MetaheuristicsCS.Mutations;
 using MetaheuristicsCS.Optimizers.Complex;
 using MetaheuristicsCS.Solutions;
 using MetaheuristicsCS.StopConditions;
 using Mutations;
 using Optimizers;
+using Optimizers.PopulationOptimizers;
 using StopConditions;
 
 
@@ -15,7 +17,7 @@ namespace MetaheuristicsCS
 {
     class MetaheuristicsCS
     {
-       
+
         static void Main(string[] args)
         {
             int[] seeds = {
@@ -30,15 +32,29 @@ namespace MetaheuristicsCS
             //{
             //    1
             //};
-            var sol1 = new Lab1();
+            //var sol1 = new Lab1();
             //var sol2 = new Lab2();
             //var sol3 = new Lab3();
-            sol1.Run(seeds);
+            //var sol4 = new Lab4();
+            var sol5 = new Lab5();
+            //var sol7 = new Lab7();
+            //sol1.Run(seeds);
             //sol2.Run(seeds);
             //sol3.Run(seeds);
+            //sol4.Run(seeds);
+            sol5.Run(seeds);
+            //sol7.Run(seeds);
+
             Console.WriteLine("Finished :)");
             Console.ReadKey();
             
+        }
+        static IEnumerable<IEnumerable<T>> GetKCombs<T>(IEnumerable<T> list, int length) where T : IComparable
+        {
+            if (length == 1) return list.Select(t => new T[] { t });
+            return GetKCombs(list, length - 1)
+                .SelectMany(t => list.Where(o => o.CompareTo(t.Last()) > 0),
+                    (t1, t2) => t1.Concat(new T[] { t2 }));
         }
     }
 }
