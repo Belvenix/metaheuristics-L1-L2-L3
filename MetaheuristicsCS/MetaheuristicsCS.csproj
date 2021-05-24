@@ -70,7 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crossovers\ACrossover.cs" />
+    <Compile Include="Crossovers\APopulationCrossover.cs" />
     <Compile Include="Crossovers\OnePointCrossover.cs" />
+    <Compile Include="Crossovers\ParametrizedPopulationCrossover.cs" />
     <Compile Include="Crossovers\UniformCrossover.cs" />
     <Compile Include="Generators\AGenerator.cs" />
     <Compile Include="Generators\BinaryRandomGenerator.cs" />

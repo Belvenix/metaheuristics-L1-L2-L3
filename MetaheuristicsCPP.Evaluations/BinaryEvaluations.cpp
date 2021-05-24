@@ -236,7 +236,6 @@ double CBinaryKnapsackEvaluation::d_penalty(vector<bool>& vSolution)
 				d_penalty_ratio = d_tmp_penalty_ratio;
 		}//if (vSolution[i])
 	}//for (int i = 0; i < iGetSize(); i++)
-
 	d_penalty = (dCalculateWeight(vSolution) - dGetCapacity()) * d_penalty_ratio;
 	return d_penalty;
 }//double CBinaryKnapsackEvaluation::d_evaluate(vector<bool> &vSolution)

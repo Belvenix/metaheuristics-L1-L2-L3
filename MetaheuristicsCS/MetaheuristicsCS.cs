@@ -36,14 +36,25 @@ namespace MetaheuristicsCS
             //var sol2 = new Lab2();
             //var sol3 = new Lab3();
             //var sol4 = new Lab4();
-            var sol5 = new Lab5();
+            //var sol5 = new Lab5();
+            //var sol6 = new Lab6();
             //var sol7 = new Lab7();
             //sol1.Run(seeds);
             //sol2.Run(seeds);
             //sol3.Run(seeds);
             //sol4.Run(seeds);
-            sol5.Run(seeds);
+            //sol5.Run(seeds);
+            //sol6.Run(seeds);
             //sol7.Run(seeds);
+
+            int[] arr = { 7, 8, 2, 3, 1, 5 };
+            int[] sortedIndexArray = arr.Select((r, i) => new { Value = r, Index = i })
+                                        .OrderBy(t => t.Value)
+                                        .Select(p => p.Index)
+                                        .Reverse()
+                                        .ToArray();
+            foreach (int item in sortedIndexArray)
+                Console.WriteLine(item);
 
             Console.WriteLine("Finished :)");
             Console.ReadKey();

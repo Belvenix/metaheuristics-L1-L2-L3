@@ -1,6 +1,8 @@
 ﻿using Crossovers;
 using EvaluationsCLI;
 using Generators;
+using MetaheuristicsCS.Crossovers;
+using MetaheuristicsCS.Optimizers.PopulationOptimizers;
 using Mutations;
 using Optimizers;
 using Optimizers.PopulationOptimizers;
@@ -18,36 +20,140 @@ namespace MetaheuristicsCS.Solutions
     {
         public override void Run(int[] seeds)
         {
+            bool debug = true;
             var problems = GenerateProblems();
-            foreach (var seed in seeds)
-            {
-                var t = Lab6FindLimpingParameter(problems, seed);
-                SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab6-limping-results.txt", t);
-            }
+            var t = Lab6FindStallingParameter(problems, seeds);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab6-limping-results.txt", t.Item1);
+            SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab6-limping-counter.txt", t.Item2);
+
+            //t = Lab6BinaryGA()
+            //int i = 1;
+            //foreach (var seed in seeds)
+            //{
+            //    var t = Lab6StallDetectionMechanism(problems, seed);
+            //    if (debug) Console.WriteLine("Island Model problems: " + DateTime.Now.ToString("HH:mm:ss.fff") + " | " + i.ToString() + "/" + seeds.Length.ToString());
+            //    SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab6-island-model.txt", t);
+            //    i++;
+            //}
         }
 
-        public List<String> Lab6FindLimpingParameter(IEvaluation<bool>[] problems, int seed)
+        public Tuple<List<String>, List<String>> Lab6FindStallingParameter(IEvaluation<bool>[] problems, int[] seeds)
         {
+            List<String> stuckResults = new List<String>();
             List<String> results = new List<String>();
-            foreach (var problem in problems)
+            double[] pMuts = new double[] { 0.01, 0.001, 0.0001, 0.00000001 };
+            int[] popSizes = new int[] { 100, 50, 20, 4 };
+
+            int iter = 1;
+            int maxI = pMuts.Length * popSizes.Length;
+            foreach (var pMut in pMuts)
             {
-                TournamentSelection selection = new TournamentSelection(2, seed);
-                OnePointCrossover crossover = new OnePointCrossover(0.01);
-                double pMut = 0.0001;
-                int popSize = 50;
-                results.Add(Lab6BinaryGA(problem, selection, crossover, pMut, popSize, seed));
+                foreach (var popSize in popSizes)
+                {
+                    Dictionary<String, int> problemStallCounter = new Dictionary<String, int>();
+                    foreach (var seed in seeds)
+                    {
+                        TournamentSelection selection = new TournamentSelection(4, seed);
+                        OnePointCrossover crossover = new OnePointCrossover(.5);
+                        foreach (var problem in problems)
+                        {
+                            results.Add(Lab6BinaryGA(problem, selection, crossover, pMut, popSize, problemStallCounter, seed));
+                        }
+                    }
+                    Console.WriteLine("\nParameters - mutation probability: " + pMut.ToString() + ", population size: " + 
+                        popSize.ToString() + " /// " + DateTime.Now.ToString("HH:mm:ss.fff") + " | " + iter.ToString() + "/" + maxI.ToString());
+
+                    stuckResults.Add(pMut.ToString() + ", " + popSize.ToString() + ", " + String.Join(", ", problemStallCounter.Select(x => x.Value).ToArray()));
+                    problemStallCounter.Select(i => $"{i.Key}: {i.Value}").ToList().ForEach(Console.WriteLine);
+                    iter++;
+                }
             }
-            return results;
+            return new Tuple<List<String>, List<String>>(results, stuckResults);
         }
 
-        private String Lab6BinaryGA(IEvaluation<bool> evaluation, ASelection selection, ACrossover crossover, double pMut, int popSize, int? seed)
+        private String Lab6BinaryGA(IEvaluation<bool> evaluation, ASelection selection, ACrossover crossover, double pMut, int popSize, Dictionary<String, int> problemStallCounter, int? seed)
         {
             IterationsStopCondition stopCondition = new IterationsStopCondition(evaluation.dMaxValue, 100);
 
             BinaryRandomGenerator generator = new BinaryRandomGenerator(evaluation.pcConstraint, seed);
             BinaryBitFlipMutation mutation = new BinaryBitFlipMutation(pMut, evaluation, seed);
 
-            GeneticAlgorithm<bool> ga = new GeneticAlgorithm<bool>(evaluation, stopCondition, generator, selection, crossover, mutation, 20);
+            GAStallDetection<bool> ga = new GAStallDetection<bool>(evaluation, stopCondition, generator, selection, crossover, mutation, popSize, 20);
+
+            ga.Run();
+            //Console.WriteLine(evaluation.GetType().Name + " : " + ga.countStalling);
+            DictionaryCounterUpdate(problemStallCounter, evaluation.GetType().Name, ga.countStalling);
+            //ReportOptimizationResult(ga.Result);
+
+            return FormatSave(ga);
+        }
+
+        private void DictionaryCounterUpdate(Dictionary<String, int> dict, String key, int value)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] += value;
+            }
+            else
+            {
+                dict.Add(key, value);
+            }
+        }
+
+        private List<String> Lab6StallDetectionMechanism(IEvaluation<bool>[] problems, int seed)
+        {
+            List<String> results = new List<String>();
+            foreach (var problem in problems)
+            {
+                TournamentSelection selection = new TournamentSelection(5, seed);
+                OnePointCrossover crossover = new OnePointCrossover(.5);
+                double pMut = 0.00000001;
+                int popSize = 20;
+
+                // Hyperparameters
+                // Number of islands
+                int[] islands = new int[] { 2, 4, 5, 10 };
+
+                // Sposob wyboru populacji do krzyżowania z utkniętą populacją
+                PopulationChoosingMethod[] methods = new PopulationChoosingMethod[] { 
+                    PopulationChoosingMethod.One, 
+                    PopulationChoosingMethod.Random, 
+                    PopulationChoosingMethod.Random 
+                };
+
+                // Sposob wykrycia utknięcia
+                int[] maxNCDs = new int[] { 5, 10, 20, 30 };
+
+                // Grid seach po podanych parametrach
+                foreach (var n in islands)
+                {
+                    foreach (var m in methods)
+                    {
+                        foreach (var mncd in maxNCDs)
+                        {
+                            results.Add(Lab6BinaryIslandModel(problem, selection, crossover, pMut, popSize,
+                                n, m, mncd,
+                                seed));
+                        }
+                    }
+                }
+            }
+            return results;
+        }
+
+        private String Lab6BinaryIslandModel(IEvaluation<bool> evaluation, ASelection selection, ACrossover crossover, double pMut, int popSize, int islandCount, PopulationChoosingMethod method, int maxNCD, int? seed)
+        {
+            IterationsStopCondition stopCondition = new IterationsStopCondition(evaluation.dMaxValue, 100);
+
+            BinaryRandomGenerator generator = new BinaryRandomGenerator(evaluation.pcConstraint, seed);
+            BinaryBitFlipMutation mutation = new BinaryBitFlipMutation(pMut, evaluation, seed);
+
+            APopulationCrossover<bool> populationCrossover = new ParametrizedPopulationCrossover<bool>(crossover, .5, method);
+
+            IslandModel im = new IslandModel(evaluation, stopCondition, generator, selection, crossover, 
+                mutation, popSize, islandCount, maxNCD, populationCrossover);
+
+            GAStallDetection<bool> ga = new GAStallDetection<bool>(evaluation, stopCondition, generator, selection, crossover, mutation, 20, 5);
 
             ga.Run();
 
@@ -56,15 +162,22 @@ namespace MetaheuristicsCS.Solutions
             return FormatSave(ga);
         }
 
+
         protected override string FormatOptimizerParameters(AOptimizer<bool> optimizer)
         {
             string parameters = "";
             switch (optimizer)
             {
-                case GeneticAlgorithm<bool> ga:
-                    parameters += ga.crossover.Probability.ToString() +
-                        ga.mutation.Probability.ToString() +
-                        ga.populationSize.ToString();
+                case IslandModel im:
+                    parameters += im.islandCount + ", " +
+                        ((ParametrizedPopulationCrossover<bool>)im.populationCrossover).Method + ", " +
+                        im.maxNoChangeDetections;
+
+                    break;
+                case GAStallDetection<bool> gasd:
+                    parameters += gasd.populationSize + ", " +
+                        gasd.mutation.Probability + ", " +  
+                        gasd.MaxNCD;
                     break;
                 default:
                     throw new NotImplementedException();

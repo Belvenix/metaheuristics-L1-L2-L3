@@ -15,7 +15,8 @@ namespace MetaheuristicsCS.Optimizers.PopulationOptimizers
 {
     class GAStallDetection<Element> : GeneticAlgorithm<Element>
     {
-        public bool StallDetected { get; private set; } = false; 
+        public bool StallDetected { get; private set; } = false;
+        public int countStalling { get; private set; } = 0;
         public int NoChangeDetected = 0;
         public int MaxNCD { get; private set; }
         public GAStallDetection(IEvaluation<Element> evaluation, AStopCondition stopCondition, AGenerator<Element> generator,
@@ -31,7 +32,11 @@ namespace MetaheuristicsCS.Optimizers.PopulationOptimizers
             bool foundNewBest = base.RunIteration(itertionNumber, startTime);
             NoChangeDetected = !foundNewBest ? NoChangeDetected + 1 : 0;
             StallDetected = NoChangeDetected >= MaxNCD;
-            if (StallDetected) Console.WriteLine("Stall detected in iteration: " + itertionNumber.ToString() );
+            if (StallDetected)
+            {
+                countStalling++;
+                //Console.WriteLine("Stall detected in iteration: " + itertionNumber.ToString() + " : " + Evaluation.GetType().Name);
+            }
             return foundNewBest;
         }
     }
