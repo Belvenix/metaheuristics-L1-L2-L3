@@ -15,7 +15,7 @@ namespace MetaheuristicsCS.Optimizers.PopulationOptimizers
     class DSMGA : GeneticAlgorithm<bool>
     {
         int[][,] ContingencyMatrixTable;
-        double[,] DsmMatrix;
+        protected double[,] DsmMatrix;
         List<List<int>> Combinations;
         bool saveDsm = true;
 

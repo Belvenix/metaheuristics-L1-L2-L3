@@ -9,6 +9,7 @@ namespace Crossovers
     {
         private readonly UniformIntegerRandom pointRNG;
 
+
         public OnePointCrossover(double probability, int? seed = null)
             : base(probability, seed)
         {

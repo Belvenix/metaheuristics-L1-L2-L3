@@ -25,6 +25,7 @@ namespace MetaheuristicsCS.Solutions
             {
                 var t = AG(seed, problems, crossover);
                 SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab7-normal.txt", t);
+                
             }
         }
 
@@ -61,6 +62,30 @@ namespace MetaheuristicsCS.Solutions
             return results;
 
         }
+
+        private List<String> AGDsmWithCrossover(int seed, IEvaluation<bool>[] problems)
+        {
+            List<String> results = new List<String>();
+
+            foreach (var evaluation in problems)
+            {
+                IterationsStopCondition stopCondition = new IterationsStopCondition(evaluation.dMaxValue, 1000);
+
+                BinaryRandomGenerator generator = new BinaryRandomGenerator(evaluation.pcConstraint, seed);
+                BinaryBitFlipMutation mutation = new BinaryBitFlipMutation(1.0 / evaluation.iSize, evaluation, seed);
+                TournamentSelection selection = new TournamentSelection(2, seed);
+
+                GAWithDSM dsmGAWithCross = new GAWithDSM(evaluation, stopCondition, generator, selection, mutation, 50, 0.5, 0.5);
+
+                dsmGAWithCross.Run();
+
+                results.Add(FormatSave(dsmGAWithCross));
+            }
+
+            return results;
+
+        }
+
 
         private List<String> AG(int seed, IEvaluation<bool>[] problems, ACrossover crossover)
         {
@@ -133,6 +158,8 @@ namespace MetaheuristicsCS.Solutions
                 //CrossoverDC(seed);
                 //CrossoverShuffledDC(seed);
                 //DsmAnalysis(seed);
+                var f = AGDsmWithCrossover(seed, problems);
+                SaveToFile(@"C:\Users\jbelter\Desktop\metaheuristics-master\metaheuristics-master\wyniki\lab7-ga-with-dsm.txt", f);
 
                 if (debug) Console.WriteLine("Finished " + i.ToString() + " seed of " + seeds.Length.ToString() + " for " + this.GetType().Name + " " + DateTime.Now.ToString("HH:mm:ss.fff"));
                 i++;

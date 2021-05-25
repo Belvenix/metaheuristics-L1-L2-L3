@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Crossovers\ACrossover.cs" />
     <Compile Include="Crossovers\APopulationCrossover.cs" />
+    <Compile Include="Crossovers\DSMCrossover.cs" />
     <Compile Include="Crossovers\OnePointCrossover.cs" />
     <Compile Include="Crossovers\ParametrizedPopulationCrossover.cs" />
     <Compile Include="Crossovers\UniformCrossover.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Selections\RouletteWheelSelection.cs" />
     <Compile Include="Selections\TournamentSelection.cs" />
     <Compile Include="Solutions\ALab.cs" />
+    <Compile Include="Optimizers\PopulationOptimizers\GAWithDSM.cs" />
     <Compile Include="Solutions\Lab1.cs" />
     <Compile Include="Solutions\Lab2.cs" />
     <Compile Include="Solutions\Lab3.cs" />
